@@ -1,0 +1,401 @@
+//program for BFS
+from collections import deque
+
+def bfs(graph, start_node):
+    # Initialize a queue for BFS
+    queue = deque([start_node])
+    # Set to track visited nodes
+    visited = set()
+
+    # Loop until the queue is empty
+    while queue:
+        # Dequeue a node from the front
+        current_node = queue.popleft()
+        
+        # If the node is already visited, skip it
+        if current_node in visited:
+            continue
+        
+        # Mark the node as visited
+        visited.add(current_node)
+        print(f"Visited: {current_node}")
+        
+        # Add neighbors to the queue
+        for neighbor in graph.get(current_node, []):
+            if neighbor not in visited:
+                queue.append(neighbor)
+
+# Example graph represented as an adjacency list
+graph = {
+    'A': ['B', 'C'],
+    'B': ['D', 'E'],
+    'C': ['F', 'G'],
+    'D': [],
+    'E': ['H'],
+    'F': [],
+    'G': [],
+    'H': []
+}
+
+# Starting BFS from node 'A'
+bfs(graph, 'A')
+
+//program for DFS recursive
+def dfs_recursive(graph, node, visited=None):
+    if visited is None:
+        visited = set()
+
+    # Mark the current node as visited
+    visited.add(node)
+    print(f"Visited: {node}")
+
+    # Recur for all unvisited neighbors
+    for neighbor in graph.get(node, []):
+        if neighbor not in visited:
+            dfs_recursive(graph, neighbor, visited)
+
+# Example graph represented as an adjacency list
+graph = {
+    'A': ['B', 'C'],
+    'B': ['D', 'E'],
+    'C': ['F', 'G'],
+    'D': [],
+    'E': ['H'],
+    'F': [],
+    'G': [],
+    'H': []
+}
+
+# Start DFS from node 'A'
+dfs_recursive(graph, 'A')
+
+//program for DFS itaretive
+def dfs_iterative(graph, start_node):
+    # Use a stack to manage nodes
+    stack = [start_node]
+    visited = set()
+
+    while stack:
+        # Pop a node from the stack
+        current_node = stack.pop()
+
+        # Skip if already visited
+        if current_node in visited:
+            continue
+
+        # Mark the current node as visited
+        visited.add(current_node)
+        print(f"Visited: {current_node}")
+
+        # Add unvisited neighbors to the stack
+        for neighbor in reversed(graph.get(current_node, [])):
+            if neighbor not in visited:
+                stack.append(neighbor)
+
+# Example graph represented as an adjacency list
+graph = {
+    'A': ['B', 'C'],
+    'B': ['D', 'E'],
+    'C': ['F', 'G'],
+    'D': [],
+    'E': ['H'],
+    'F': [],
+    'G': [],
+    'H': []
+}
+
+# Start DFS from node 'A'
+dfs_iterative(graph, 'A')
+
+//squre of given number
+
+# Function to calculate the square of a number
+def square_of_number(num):
+    return num ** 2
+
+# Get user input
+number = float(input("Enter a number: "))
+result = square_of_number(number)
+
+# Display the result
+print(f"The square of {number} is {result}")
+
+//cube
+# Function to calculate the cube of a number
+def cube_of_number(num):
+    return num ** 3
+
+# Get user input
+number = float(input("Enter a number: "))
+result = cube_of_number(number)
+
+# Display the result
+print(f"The cube of {number} is {result}")
+
+//Factorial of number
+def factorial(n):
+    if n == 0 or n == 1:
+        return 1
+    return n * factorial(n - 1)
+
+# Example usage
+num = int(input("Enter a number: "))
+print(f"Factorial of {num} is {factorial(num)}")
+
+//area of trangle
+def area_of_triangle(base, height):
+    return 0.5 * base * height
+
+# Example usage
+base = float(input("Enter base of the triangle: "))
+height = float(input("Enter height of the triangle: "))
+print(f"Area of the triangle is {area_of_triangle(base, height)}")
+
+//area of circle
+import math
+
+def area_of_circle(radius):
+    return math.pi * radius ** 2
+
+# Example usage
+radius = float(input("Enter radius of the circle: "))
+print(f"Area of the circle is {area_of_circle(radius)}")
+
+//area of rectangle
+def area_of_rectangle(length, width):
+    return length * width
+
+# Example usage
+length = float(input("Enter length of the rectangle: "))
+width = float(input("Enter width of the rectangle: "))
+print(f"Area of the rectangle is {area_of_rectangle(length, width)}")
+
+//palindrome
+def is_palindrome(string):
+    return string == string[::-1]
+
+# Example usage
+word = input("Enter a word: ")
+if is_palindrome(word):
+    print(f"{word} is a palindrome")
+else:
+    print(f"{word} is not a palindrome")
+
+//perfect number
+def is_perfect_number(n):
+    divisors = [i for i in range(1, n) if n % i == 0]
+    return sum(divisors) == n
+
+# Example usage
+num = int(input("Enter a number: "))
+if is_perfect_number(num):
+    print(f"{num} is a perfect number")
+else:
+    print(f"{num} is not a perfect number")
+
+//water jug problem
+from collections import deque
+
+def water_jug_problem(jug1, jug2, target):
+    visited = set()
+    queue = deque([(0, 0)])  # (amount in jug1, amount in jug2)
+
+    while queue:
+        state = queue.popleft()
+        if state in visited:
+            continue
+        visited.add(state)
+        
+        jug1_amt, jug2_amt = state
+        print(f"State: {state}")
+        
+        if jug1_amt == target or jug2_amt == target:
+            return True
+
+        # Generate possible states
+        next_states = [
+            (jug1, jug2_amt),  # Fill jug1
+            (jug1_amt, jug2),  # Fill jug2
+            (0, jug2_amt),     # Empty jug1
+            (jug1_amt, 0),     # Empty jug2
+            (min(jug1, jug1_amt + jug2_amt), max(0, jug2_amt - (jug1 - jug1_amt))),  # Pour jug2 -> jug1
+            (max(0, jug1_amt - (jug2 - jug2_amt)), min(jug2, jug1_amt + jug2_amt))   # Pour jug1 -> jug2
+        ]
+        queue.extend(next_states)
+
+    return False
+
+# Example usage
+jug1_capacity = int(input("Enter capacity of jug 1: "))
+jug2_capacity = int(input("Enter capacity of jug 2: "))
+target = int(input("Enter target amount: "))
+if water_jug_problem(jug1_capacity, jug2_capacity, target):
+    print("Target can be reached")
+else:
+    print("Target cannot be reached")
+
+//finding GCD
+def gcd(a, b):
+    while b:
+        a, b = b, a % b
+    return a
+
+# Example usage
+num1 = int(input("Enter first number: "))
+num2 = int(input("Enter second number: "))
+print(f"GCD of {num1} and {num2} is {gcd(num1, num2)}")
+
+//linear Regration
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error
+import numpy as np
+import pandas as pd
+
+# Example dataset
+data = {
+    'X': [1, 2, 3, 4, 5],
+    'Y': [1.5, 3.0, 4.5, 6.0, 7.5]
+}
+df = pd.DataFrame(data)
+
+# Splitting data into training and testing sets
+X = df[['X']]  # Features
+y = df['Y']    # Target
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Create and train the model
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+# Predictions
+y_pred = model.predict(X_test)
+
+# Results
+print("Coefficients:", model.coef_)
+print("Intercept:", model.intercept_)
+print("Mean Squared Error:", mean_squared_error(y_test, y_pred))
+
+//Random forest
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+
+# Load Iris dataset
+data = load_iris()
+X, y = data.data, data.target
+
+# Splitting data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Create and train the model
+model = RandomForestClassifier(n_estimators=100, random_state=42)
+model.fit(X_train, y_train)
+
+# Predictions
+y_pred = model.predict(X_test)
+
+# Results
+print("Accuracy:", accuracy_score(y_test, y_pred))
+
+//K-Nearest Neighbors (KNN)
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+
+# Load Iris dataset
+data = load_iris()
+X, y = data.data, data.target
+
+# Splitting data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Create and train the model
+model = KNeighborsClassifier(n_neighbors=3)  # Using 3 neighbors
+model.fit(X_train, y_train)
+
+# Predictions
+y_pred = model.predict(X_test)
+
+# Results
+print("Accuracy:", accuracy_score(y_test, y_pred))
+
+//Reverse String 
+def reverse_string(s):
+    return s[::-1]
+
+# Example usage
+input_string = input("Enter a string: ")
+reversed_string = reverse_string(input_string)
+print(f"Reversed string: {reversed_string}")
+
+//LCM
+import math
+
+def lcm(a, b):
+    return abs(a * b) // math.gcd(a, b)
+
+# Example usage
+num1 = int(input("Enter first number: "))
+num2 = int(input("Enter second number: "))
+print(f"LCM of {num1} and {num2} is {lcm(num1, num2)}")
+
+
+//switch case
+def addition(a, b):
+    return a + b
+
+def subtraction(a, b):
+    return a - b
+
+def multiplication(a, b):
+    return a * b
+
+def division(a, b):
+    if b == 0:
+        return "Cannot divide by zero"
+    return a / b
+
+def switch_case(option, a, b):
+    switch = {
+        1: addition(a, b),
+        2: subtraction(a, b),
+        3: multiplication(a, b),
+        4: division(a, b)
+    }
+    return switch.get(option, "Invalid option")
+
+# Example usage
+print("Select an option:")
+print("1. Addition")
+print("2. Subtraction")
+print("3. Multiplication")
+print("4. Division")
+
+option = int(input("Enter your choice: "))
+a = float(input("Enter first number: "))
+b = float(input("Enter second number: "))
+result = switch_case(option, a, b)
+print(f"Result: {result}")
+
+//chatbot
+import random
+greetings = ['hola', 'hello', 'hi', 'Hi', 'hey!', 'hey']
+random_greeting = random. choice(greetings)
+question = ['How are you?', 'What are you doing? ' ]
+responses = ['Okay', "I'm fine"]
+random_response = random. choice(responses)
+while True:
+ userInput = input(">>> ")
+ if userInput in greetings:
+ print (random_greeting)
+ elif userInput in question:
+ print (random_response)
+ else:
+ print ("I did not understand what you said")
+
+
+
+
